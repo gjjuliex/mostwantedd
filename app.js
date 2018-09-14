@@ -8,6 +8,7 @@ function app(people){
   switch(searchType){
     case 'yes':
     searchByName(people);
+    console.log(people);
     // TODO: search by name
     break;
     case 'no':
@@ -94,8 +95,12 @@ function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
    people.filter(function(el){
-      if (firstName == el.firstName && lastName == el.lastName) {
+      if (firstName === el.firstName && lastName === el.lastName) {
         return true;
+      }
+      else {
+        alert("Wrong! Please try again, following the instructions dummy. :)");
+        app(people); // restart app
       }
    });
   // TODO: find the person using the name they entered
