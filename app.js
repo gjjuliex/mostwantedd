@@ -3,24 +3,57 @@ Build all of your functions for displaying and gathering information below (GUI)
 */
 
 // app is the function called to start the entire application
-function app(people){
-  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(searchType){
-    case 'yes':
-    searchByName(people) ;
-    console.log(people);
-    // TODO: search by name
-    break;
-    case 'no':
-    searchByTraits(people);
-    break;
-    default:
-    alert("Wrong! Please try again, following the instructions dummy. :)");
-    app(people); // restart app
-    break;
-  }
+
+
+function appendAgeToData(people) {
+	let newPeople = people; //Get the global people data
+	//Map across each person's data
+    newPeople.map(function(person) {
+		//append the age prop to the newPeople data with the evalulated value using getAge(of that person's date of birth)
+		//newPeople["Age"] = getAge(person.dob);
+	    person.age = getAge(person.dob);
+    })
+	//Return that entire database object for unknown usage purposes?
+	return newPeople;
 }
 
+
+function app(people){
+  appendAgeToData(people);
+  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  switch(searchType) {
+    case "yes":
+      filteredPeople = searchByName(people);
+    // TODO: search by name
+      break;
+    case 'no':
+      searchByTraits(people);
+        break;
+    default:
+      alert("Wrong! Please try again, following the instructions dummy. :)");
+      app(people); // restart app
+      break;
+  }
+
+  let foundPerson = filteredPeople[0];
+
+  mainMenu(foundPerson, people);
+}
+
+function searchByName(people){
+  var firstName = promptFor("What is the person's first name?", chars);
+  var lastName = promptFor("What is the person's last name?", chars);
+
+  let newArray = people.filter(function (el) {
+    if(el.firstName == firstName && el.lastName == lastName) {
+      return true;
+    }
+    // return true if full name matches database
+  });
+  return newArray;
+  // IP -- TODO: find the person using the name they entered
+
+}
 
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
@@ -29,10 +62,28 @@ function searchByTraits(people) {
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
+      alert (displayPeople(filteredPeople));
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
+      alert (displayPeople(filteredPeople));
       break;
+    case "eye color":
+      filteredPeople = searchByEyeColor(people);
+      alert (displayPeople(filteredPeople));
+      break;
+    case "gender":
+      filteredPeople = searchByGender(people);
+      alert (displayPeople(filteredPeople));
+      break;
+    case "age":
+      filteredPeople = searchByAge(people);
+      alert (displayPeople(filteredPeople));
+      break;
+    case "occupation":
+      filteredPeople = searchByOccupation(people);
+      alert (displayPeople(filteredPeople));
+      break;  
     // so on and so forth
     default:
       alert("You entered an invalid search type! Please try again.");
@@ -59,10 +110,98 @@ function searchByWeight(people) {
   return newArray;
 }
 
+function searchByEyeColor(people) {
+  let userInputEyeColor = prompt("What is the person's eye color?");
+
+  let newArray = people.filter(function (el) {
+    if(el.eyeColor == userInputEyeColor) {
+      return true;
+    }
+    // return true if eye color matches person's
+  });
+
+  return newArray;
+}
+
+function searchByAge(people) {
+  let userInputAge = prompt("What is the person's age?");
+
+  let newArray = people.filter(function (el) {
+    if(el.age == userInputAge) {
+      return true;
+    }
+    // return true if a person's age matches
+  });
+  // alert(displayPeople(newArray));
+  return newArray;
+}
+
+function searchByGender(people) {
+  let userInputGender = prompt("What is the person's gender?");
+
+  let newArray = people.filter(function (el) {
+    if(el.gender == userInputGender) {
+      return true;
+    }
+    // return true if a person's gender matches
+  });
+  // alert(displayPeople(newArray));
+  return newArray;
+}
+
+function searchByOccupation(people) {
+  let userInputOccupation = prompt("What is the person's Occupation?");
+
+  let newArray = people.filter(function (el) {
+    if(el.occupation == userInputOccupation) {
+      return true;
+    }
+    // return true if a person's occupation matches
+  });
+  // alert(displayPeople(newArray));
+  return newArray;
+}
+
+function searchByHeight(people) {
+  let userInputHeight = prompt("What is the person's height?");
+
+  let newArray = people.filter(function (el) {
+    if(el.height == userInputHeight) {
+      return true;
+    }
+    // return true if a person's height matches
+  });
+  // alert(displayPeople(newArray));
+  return newArray;
+}
+
+
+
+// A function to calculate age in years
+function getAge(dateOfBirth) {
+	var arrDateOfBirth = dateOfBirth.split("/"); //01/01/YYYY
+	var dteYear = arrDateOfBirth[2]; //Year Index
+	var dteMonth = arrDateOfBirth[0]; //Month Index
+	var dteDay = arrDateOfBirth[1]; //Day Index
+	var dteCurrentDate = new Date(); //Full Year Information from Current Computer
+	var dteCurrentYear = dteCurrentDate.getFullYear(); //Extract Current Year from Current Computer
+	var fixedCurrentMonth = dteCurrentDate.getMonth() + 1;
+	if (fixedCurrentMonth > dteMonth) {
+		return dteCurrentYear - dteYear;
+	} else {
+		if (fixedCurrentMonth == dteMonth && dteCurrentDate.getDate() >= dteDay) {
+			return dteCurrentYear - dteYear;
+		} else {
+			return dteCurrentYear - dteYear -1;
+		}
+	}
+}
+
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. 
+  We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
     alert("Could not find that individual.");
@@ -73,6 +212,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
+    displayPerson(person);
     // get person's info
     break;
     case "family":
@@ -91,21 +231,6 @@ function mainMenu(person, people){
   }
 }
 
-function searchByName(people){
-  var firstName = promptFor("What is the person's first name?", chars);
-  var lastName = promptFor("What is the person's last name?", chars);
-   people.filter(function(el){
-      if (firstName === el.firstName && lastName === el.lastName) {
-        return true;
-      }
-      else {
-        alert("Wrong! Please try again, following the instructions dummy. :)");
-        app(people); // restart app
-      }
-   });
-  // TODO: find the person using the name they entered
-
-}
 
 // alerts a list of people
 function displayPeople(people){
@@ -119,6 +244,13 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Age: " + person.age + "\n";
+  personInfo += "BirthDate: " + person.dob + "\n";
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
