@@ -207,6 +207,25 @@ function familySearch(person,people) {
   return newArray;
 }
 
+function parentSearch (person,people) {
+    let newArray = people.filter(function (el) {
+      if ((person.parents[0] == el.id) || (person.parents[1] == el.id)) {
+        return true;
+      }
+    });
+  return newArray;
+}
+
+function siblingSearch (person,people) {
+  let newArray = people.filter(function (el) {
+    if ((person.parents && person.parents.length) && ((person.parents[0] == el.parents[0]) || (person.parents[1] == el.parents[1]))) {
+      return true;
+    }
+  });
+return newArray;
+}
+
+
 // A function to calculate age in years
 function getAge(dateOfBirth) {
 	var arrDateOfBirth = dateOfBirth.split("/"); //01/01/YYYY
@@ -246,6 +265,14 @@ function mainMenu(person, people){
     // get person's info
     break;
     case "family":
+
+    // let foundParents = parentSearch(person,people);
+    // let foundSiblings = siblingSearch(person,people);
+    // alert ("Parents: ");
+    // alert (displayPeople(foundParents));
+    // alert ("Siblings: ");
+    // alert (displayPeople(foundSiblings));
+
     let foundFamily = familySearch(person,people);
     alert (displayPeople(foundFamily));
     // TODO: get person's family
