@@ -68,22 +68,27 @@ function searchByTraits(people) {
     case "weight":
       filteredPeople = searchByWeight(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
       break;
     case "eye color":
       filteredPeople = searchByEyeColor(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
       break;
     case "gender":
       filteredPeople = searchByGender(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
       break;
     case "age":
       filteredPeople = searchByAge(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
       break;  
     // so on and so forth
     default:
