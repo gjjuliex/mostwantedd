@@ -63,33 +63,58 @@ function searchByTraits(people) {
     case "height":
       filteredPeople = searchByHeight(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;
     case "eye color":
       filteredPeople = searchByEyeColor(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;
     case "gender":
       filteredPeople = searchByGender(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;
     case "age":
       filteredPeople = searchByAge(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
       alert (displayPeople(filteredPeople));
+      searchByTraits(filteredPeople);
+      searchByAnotherTrait(filteredPeople);
       break;  
+      
     // so on and so forth
     default:
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
-      break;
-  }  
+      break; 
+
+//   searchByAnotherTrait(filteredPeople); {
+//   if(willSearchAgain === true) {
+//     searchByTraits(filteredPeople);
+//   }
+//   else { 
+//     app(filteredPeople);
+//   }
+// }
+  
+
+  
+// check the length of filteredPeople
 
   let foundPerson = filteredPeople[0];
 
@@ -271,4 +296,16 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
+}
+
+function searchByAnotherTrait () {
+  let willSearchAgain = confirm("Search another trait?");
+  return willSearchAgain;
+  // if(confirm("Search another trait?")) {
+  //   searchByTraits(people);
+  // }
+  // else {
+  //   app(people);
+  // }
+}
 }
