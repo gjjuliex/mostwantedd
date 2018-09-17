@@ -24,11 +24,12 @@ function app(people){
   switch(searchType) {
     case "yes":
       filteredPeople = searchByName(people);
+      
     // TODO: search by name
       break;
     case 'no':
       searchByTraits(people);
-        break;
+      break;
     default:
       alert("Wrong! Please try again, following the instructions dummy. :)");
       app(people); // restart app
@@ -175,7 +176,16 @@ function searchByHeight(people) {
   return newArray;
 }
 
-
+// Function to search for family
+function familySearch(person,people) {
+  let newArray = people.filter(function (el) {
+    if ((person.id == el.parents[0]) || (person.id == el.parents[1]) || (person.id == el.currentSpouse)) {
+      return true;
+    }
+  });
+  // alert (newArray);
+  return newArray;
+}
 
 // A function to calculate age in years
 function getAge(dateOfBirth) {
@@ -216,6 +226,8 @@ function mainMenu(person, people){
     // get person's info
     break;
     case "family":
+    let foundFamily = familySearch(person,people);
+    alert (displayPeople(foundFamily));
     // TODO: get person's family
     break;
     case "descendants":
