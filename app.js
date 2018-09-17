@@ -56,6 +56,14 @@ function searchByName(people){
 
 }
 
+// if one person is finally found, then return to main loop
+function onePersonFound(filteredPeople,people) {
+  if (filteredPeople.length == 1) {
+    app(people);
+  }
+  searchByTraits(filteredPeople);
+}
+
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
@@ -64,31 +72,38 @@ function searchByTraits(people) {
     case "height":
       filteredPeople = searchByHeight(people);
       alert (displayPeople(filteredPeople));
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "eye color":
       filteredPeople = searchByEyeColor(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "gender":
       filteredPeople = searchByGender(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "age":
       filteredPeople = searchByAge(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;  
     // so on and so forth
     default:
