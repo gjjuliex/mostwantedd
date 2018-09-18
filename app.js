@@ -215,13 +215,28 @@ function parentSearch (person,people) {
   return newArray;
 }
 
+function descendantSearch (person,people) {
+  //let allDescendants = [];
+  let newArray = people.filter(function (el) {
+    if (person.id == el.parents[0] || person.id == el.parents[1]) {
+      return true;
+    }
+  });
+
+  for (let i=0; i<newArray.length; i++) {
+    newArray = newArray.concat(childrenSearch(newArray[i], people));
+    // return childrenSearch(newArray[i],people);
+  }
+return newArray;
+}
+
 function childrenSearch (person,people) {
   let newArray = people.filter(function (el) {
     if (person.id == el.parents[0] || person.id == el.parents[1]) {
       return true;
     }
   });
-return newArray;
+ return newArray;
 }
 
 function siblingSearch (person,people) {
@@ -316,10 +331,14 @@ function mainMenu(person, people){
       alert (displayPeople(foundSiblings));
       alert ("Children: ");
       alert (displayPeople(foundChildren));
+
       // TODO: get person's family
     break;
 
     case "descendants":
+      let foundDescendant = descendantSearch(person,people);
+      alert ("Descendants: ");
+      alert (displayPeople(foundDescendant));
       // TODO: get person's descendants
     break;
 
