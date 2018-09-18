@@ -226,7 +226,8 @@ return newArray;
 
 function siblingSearch (person,people) {
   let newArray = people.filter(function (el) {
-    if ((person.id !== el.id) && (person.parents && person.parents.length) && ((person.parents[0] == el.parents[0]) || (person.parents[1] == el.parents[1]))) {
+    if ((person.id !== el.id) && (person.parents && person.parents.length) && ((person.parents[0] == el.parents[0]) || 
+    (person.parents[1] == el.parents[1]) || (person.parents[0] == el.parents[1]) || (person.parents[1] == el.parents[0]))) {
       return true;
     }
   });
