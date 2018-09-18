@@ -226,12 +226,31 @@ return newArray;
 
 function siblingSearch (person,people) {
   let newArray = people.filter(function (el) {
-    if ((person.id !== el.id) && (person.parents && person.parents.length) && ((person.parents[0] == el.parents[0]) || 
-    (person.parents[1] == el.parents[1]) || (person.parents[0] == el.parents[1]) || (person.parents[1] == el.parents[0]))) {
+    if (((person.id !== el.id) && (person.parents && person.parents.length)) && (((person.parents[0] == el.parents[0]) || 
+    (person.parents[1] == el.parents[1]) || (person.parents[0] == el.parents[1]) || (person.parents[1] == el.parents[0])))) {
       return true;
     }
   });
 return newArray;
+}
+
+function siblingSearch2 (person,people) {
+  let newArray = people.filter(function (el) {
+    if ((person.parents[0] == el.parents[0]) && (person.id !== el.id))
+     {
+      return true;
+    }
+  });
+return newArray;
+}
+
+function sibSearch(person,people) {
+  if (person.parents.length == 1) {
+  let sib2 = siblingSearch2(person,people);
+  return sib2;
+  }
+  let sib = siblingSearch(person,people);
+  return sib;
 }
 
 function spouseSearch (person,people) {
@@ -288,7 +307,7 @@ function mainMenu(person, people){
       let foundChildren = childrenSearch(person,people);
       let foundSpouse = spouseSearch(person,people);
       let foundParents = parentSearch(person,people);
-      let foundSiblings = siblingSearch(person,people);
+      let foundSiblings = sibSearch(person,people);
       alert ("Spouse: ");
       alert (displayPeople(foundSpouse));
       alert ("Parents: ");
