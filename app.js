@@ -24,11 +24,12 @@ function app(people){
   switch(searchType) {
     case "yes":
       filteredPeople = searchByName(people);
+      
     // TODO: search by name
       break;
     case 'no':
       searchByTraits(people);
-        break;
+      break;
     default:
       alert("Wrong! Please try again, following the instructions dummy. :)");
       app(people); // restart app
@@ -55,6 +56,14 @@ function searchByName(people){
 
 }
 
+// if one person is finally found, then return to main loop
+function onePersonFound(filteredPeople,people) {
+  if (filteredPeople.length == 1) {
+    app(people);
+  }
+  searchByTraits(filteredPeople);
+}
+
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
@@ -63,38 +72,38 @@ function searchByTraits(people) {
     case "height":
       filteredPeople = searchByHeight(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "eye color":
       filteredPeople = searchByEyeColor(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "gender":
       filteredPeople = searchByGender(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "age":
       filteredPeople = searchByAge(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;
     case "occupation":
       filteredPeople = searchByOccupation(people);
       alert (displayPeople(filteredPeople));
-      searchByTraits(filteredPeople);
-      searchByAnotherTrait(filteredPeople);
+      onePersonFound(filteredPeople,people);
+      //searchByTraits(filteredPeople);
       break;  
       
     // so on and so forth
@@ -200,7 +209,16 @@ function searchByHeight(people) {
   return newArray;
 }
 
-
+// Function to search for family
+function familySearch(person,people) {
+  let newArray = people.filter(function (el) {
+    if ((person.id == el.parents[0]) || (person.id == el.parents[1]) || (person.id == el.currentSpouse)) {
+      return true;
+    }
+  });
+  // alert (newArray);
+  return newArray;
+}
 
 // A function to calculate age in years
 function getAge(dateOfBirth) {
@@ -241,6 +259,8 @@ function mainMenu(person, people){
     // get person's info
     break;
     case "family":
+    let foundFamily = familySearch(person,people);
+    alert (displayPeople(foundFamily));
     // TODO: get person's family
     break;
     case "descendants":
