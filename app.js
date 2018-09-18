@@ -9,11 +9,10 @@ function appendAgeToData(people) {
 	let newPeople = people; //Get the global people data
 	//Map across each person's data
     newPeople.map(function(person) {
-		//append the age prop to the newPeople data with the evalulated value using getAge(of that person's date of birth)
-		//newPeople["Age"] = getAge(person.dob);
+		//append age category to the newPeople data with the evalualated value using getAge(of that person's dob)
 	    person.age = getAge(person.dob);
     })
-	//Return that entire database object for unknown usage purposes?
+
 	return newPeople;
 }
 
@@ -216,8 +215,45 @@ function familySearch(person,people) {
       return true;
     }
   });
-  // alert (newArray);
+
   return newArray;
+}
+
+function parentSearch (person,people) {
+    let newArray = people.filter(function (el) {
+      if ((person.parents[0] == el.id) || (person.parents[1] == el.id)) {
+        return true;
+      }
+    });
+  return newArray;
+}
+
+function childrenSearch (person,people) {
+  let newArray = people.filter(function (el) {
+    if (person.id == el.parents[0] || person.id == el.parents[1]) {
+      return true;
+    }
+  });
+return newArray;
+}
+
+function siblingSearch (person,people) {
+  let newArray = people.filter(function (el) {
+    if ((person.id !== el.id) && (person.parents && person.parents.length) && ((person.parents[0] == el.parents[0]) || 
+    (person.parents[1] == el.parents[1]) || (person.parents[0] == el.parents[1]) || (person.parents[1] == el.parents[0]))) {
+      return true;
+    }
+  });
+return newArray;
+}
+
+function spouseSearch (person,people) {
+  let newArray = people.filter(function (el) {
+    if (person.id == el.currentSpouse) {
+      return true;
+    }
+  });
+return newArray;
 }
 
 // A function to calculate age in years
@@ -228,7 +264,7 @@ function getAge(dateOfBirth) {
 	var dteDay = arrDateOfBirth[1]; //Day Index
 	var dteCurrentDate = new Date(); //Full Year Information from Current Computer
 	var dteCurrentYear = dteCurrentDate.getFullYear(); //Extract Current Year from Current Computer
-	var fixedCurrentMonth = dteCurrentDate.getMonth() + 1;
+	var fixedCurrentMonth = dteCurrentDate.getMonth() + 1; //month is counted from 0, not 1. So add 1 to compensate.
 	if (fixedCurrentMonth > dteMonth) {
 		return dteCurrentYear - dteYear;
 	} else {
@@ -255,27 +291,44 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    displayPerson(person);
-    // get person's info
+      displayPerson(person);
+      // get person's info
     break;
+
     case "family":
-    let foundFamily = familySearch(person,people);
-    alert (displayPeople(foundFamily));
-    // TODO: get person's family
+      // let foundFamily = siblingSearch(person,people);
+      // alert (displayPeople(foundFamily));
+      let foundChildren = childrenSearch(person,people);
+      let foundSpouse = spouseSearch(person,people);
+      let foundParents = parentSearch(person,people);
+      let foundSiblings = siblingSearch(person,people);
+      alert ("Spouse: ");
+      alert (displayPeople(foundSpouse));
+      alert ("Parents: ");
+      alert (displayPeople(foundParents));
+      alert ("Siblings: ");
+      alert (displayPeople(foundSiblings));
+      alert ("Children: ");
+      alert (displayPeople(foundChildren));
+      // TODO: get person's family
     break;
+
     case "descendants":
-    // TODO: get person's descendants
+      // TODO: get person's descendants
     break;
+
     case "restart":
     app(people); // restart
     break;
+
     case "quit":
     return; // stop execution
     default:
     return mainMenu(person, people); // ask again
-  }
-}
 
+  }
+
+}
 
 // alerts a list of people
 function displayPeople(people){
