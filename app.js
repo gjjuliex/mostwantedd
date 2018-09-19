@@ -324,11 +324,12 @@ function mainMenu(person, people) {
   }
 }
 
-// alerts a list of people
 function displayPeople(people) {
-  alert(people.map(function (person) {
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
+  var peoplelist = "";
+  people.map(function (person) {
+    peoplelist += person.firstName + " " + person.lastName + "\n";
+  });
+  return peoplelist.replace(undefined, "");
 }
 
 function displayPerson(person) {
