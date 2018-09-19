@@ -326,10 +326,10 @@ function mainMenu(person, people) {
       return mainMenu(person, people); // ask again
   }
 }
+
 // First name and last name were used to create peoplelist and we used the replace function 
 // to replace undefined with an empty string. This prevents the undefined message from popping 
 // up when we used alert to display people.
-
 function displayPeople(people) {
   var peoplelist = "";
   people.map(function (person) {
