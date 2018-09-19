@@ -32,10 +32,12 @@ function app(people) {
       app(people); // restart app
       break;
   }
+  //Eventually one person's name will be found using various search categories.
   let foundPerson = filteredPeople[0];
   mainMenu(foundPerson, people);
 }
 
+//Searching by full name from which all personal data can be displayed.
 function searchByName(people) {
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
@@ -57,6 +59,8 @@ function onePersonFound(filteredPeople, people) {
 }
 
 //Searching by various traits and will eventually narrow down to one person.
+//Once it's narrowed down to one person, program will loop back to beginning and at this time a name is already known
+//for further data requests.
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
@@ -82,7 +86,7 @@ function searchByTraits(people) {
       alert(displayPeople(filteredPeople));
       onePersonFound(filteredPeople, people);
       break;
-    case "age":
+    case "age"://Age category was amended to "virtual" data file after getAge calculations.
       filteredPeople = searchByAge(people);
       alert(displayPeople(filteredPeople));
       onePersonFound(filteredPeople, people);
@@ -92,7 +96,7 @@ function searchByTraits(people) {
       alert(displayPeople(filteredPeople));
       onePersonFound(filteredPeople, people);
       break;
-    default:
+    default://Go back to trait search loop if incorrect categories or misspellings were entered.
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
       break;
